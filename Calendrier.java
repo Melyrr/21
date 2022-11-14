@@ -8,14 +8,14 @@ public class Calendrier {
         int année = clavier.nextInt();
         afficherTitre(mois,année);
         afficherEntête();
-        afficherMois(4,31);
+        afficherMois(numéroJour(1,mois,année),nombreJours(mois, année));
     }
-    static String nomMois(int mois){
+        static String nomMois(int mois){
         String nomMois ="";
         switch(mois){
-            case 1 : 
-                nomMois = "Janvier";
-            break;
+            case 1 :
+            nomMois = "Janvier";
+            break;  
             case 2 : 
             nomMois = "Février";
             break;
@@ -62,7 +62,7 @@ public class Calendrier {
         }
         static void afficherMois(int décalage, int nombreJours){
             int space;
-            space=décalage*4;
+            space=décalage;
             int count=0;
             while(count<space){
                 System.out.print(" ");
@@ -85,5 +85,63 @@ public class Calendrier {
             }
         }
     }
-
-}
+        static boolean estBissextile(int année){
+            if(((année%4==0) && !(année%100==0)) || (année%400==0)){
+                System.out.println("YES");
+                return true;
+            }else{
+                System.out.println("NO");
+                return false;
+            }
+        }
+        static int nombreJours(int mois, int année){
+            int nbJours=0;
+            switch(mois){
+                case 1 :
+                nbJours = 31;
+                break;  
+                case 2 : 
+                if(estBissextile(année)){nbJours=29;}else{nbJours=28;};
+                break;
+                case 3 : 
+                nbJours = 31;
+                break;
+                case 4 : 
+                nbJours = 30;
+                break;
+                case 5 : 
+                nbJours = 31;
+                break;
+                case 6 : 
+                nbJours = 30;
+                break;
+                case 7 : 
+                nbJours = 31;
+                break;
+                case 8 : 
+                nbJours = 31;
+                break;
+                case 9 : 
+                nbJours = 30;
+                break;
+                case 10 : 
+                nbJours = 31;
+                break;
+                case 11 : 
+                nbJours = 30;
+                break;
+                case 12 : 
+                nbJours = 31;
+                }
+            return nbJours;
+        }
+        static int numéroJour(int jour, int mois, int année){
+            int h;
+            int q = jour;
+            int m=mois;
+            int J=année/20;
+            int K=année%100;
+            h = (q+(((m+1)*13)/5)+K+(K/4)+(J/4)+5*J+5)%7;
+            return h;
+        }
+    }
